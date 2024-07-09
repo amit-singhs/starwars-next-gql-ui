@@ -1,4 +1,4 @@
-schema: http://localhost:3000/api/graphql
+schema: `${process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT}/api/graphql`
 documents: './src/**/*.graphql'
 generates:
   ./src/generated/graphql.ts:

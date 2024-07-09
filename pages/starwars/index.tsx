@@ -24,7 +24,7 @@ export default function Home() {
   const { data, isLoading } = useQuery<{ person: Person }>({
     queryKey: ["person"],
     queryFn: async () =>
-      request("http://localhost:3000/api/graphql", GetPersonDocument, {
+      request(`${process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT}/api/graphql`, GetPersonDocument, {
         personId: 4,
       }),
   });
