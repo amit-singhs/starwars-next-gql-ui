@@ -1,4 +1,5 @@
 import { Hydrate, QueryClientProvider } from "react-query";
+import "../app/globals.css";
 
 import { queryClient } from "../src/api";
 import Layout from "../components/Layout";
