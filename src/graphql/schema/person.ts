@@ -70,4 +70,7 @@ export class Person {
 
     @Field(() =>[Starship])
     starships: Starship[] | undefined;
+
+    @Field(() =>String)
+    url: string | undefined;
 }

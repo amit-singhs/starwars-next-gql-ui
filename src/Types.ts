@@ -27,6 +27,7 @@ export type Homeworld = {
   
   export type Person = {
     name: string;
+    url: string;
     birthYear: string;
     homeworld: Homeworld;
     films: Film[];

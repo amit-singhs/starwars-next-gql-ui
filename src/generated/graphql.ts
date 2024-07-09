@@ -37,11 +37,13 @@ export type Person = {
   homeworld: Homeworld;
   name: Scalars['ID']['output'];
   starships: Array<Starship>;
+  url: Scalars['String']['output'];
   vehicles: Array<Vehicle>;
 };
 
 export type Query = {
   __typename?: 'Query';
+  getAllPersons: Array<Person>;
   person: Person;
 };
 
@@ -66,18 +68,33 @@ export type Vehicle = {
   name: Scalars['String']['output'];
 };
 
+export type GetAllPersonsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAllPersonsQuery = { __typename?: 'Query', getAllPersons: Array<{ __typename?: 'Person', name: string, url: string, birthYear: string }> };
+
 export type GetPersonQueryVariables = Exact<{
   personId: Scalars['Float']['input'];
 }>;
 
 
-export type GetPersonQuery = { __typename?: 'Query', person: { __typename?: 'Person', name: string, birthYear: string, homeworld: { __typename?: 'Homeworld', name: string, climate: string, terrain: string }, films: Array<{ __typename?: 'Film', title: string, episode: string }>, vehicles: Array<{ __typename?: 'Vehicle', name: string, model: string, class: string, cost: string }>, starships: Array<{ __typename?: 'Starship', name: string, model: string, class: string, cost: string }> } };
+export type GetPersonQuery = { __typename?: 'Query', person: { __typename?: 'Person', name: string, url: string, birthYear: string, homeworld: { __typename?: 'Homeworld', name: string, climate: string, terrain: string }, films: Array<{ __typename?: 'Film', title: string, episode: string }>, vehicles: Array<{ __typename?: 'Vehicle', name: string, model: string, class: string, cost: string }>, starships: Array<{ __typename?: 'Starship', name: string, model: string, class: string, cost: string }> } };
 
 
+export const GetAllPersonsDocument = gql`
+    query getAllPersons {
+  getAllPersons {
+    name
+    url
+    birthYear
+  }
+}
+    `;
 export const GetPersonDocument = gql`
     query getPerson($personId: Float!) {
   person(id: $personId) {
     name
+    url
     birthYear
     homeworld {
       name
@@ -111,6 +128,9 @@ const defaultWrapper: SdkFunctionWrapper = (action, _operationName, _operationTy
 
 export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
   return {
+    getAllPersons(variables?: GetAllPersonsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetAllPersonsQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetAllPersonsQuery>(GetAllPersonsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getAllPersons', 'query', variables);
+    },
     getPerson(variables: GetPersonQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetPersonQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetPersonQuery>(GetPersonDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getPerson', 'query', variables);
     }

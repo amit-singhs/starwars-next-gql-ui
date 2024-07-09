@@ -1,6 +1,6 @@
 import { useQuery } from "react-query";
 import request from "graphql-request";
-import { GetPersonDocument } from "@/src/generated/graphql";
+import { GetAllPersonsDocument } from "@/src/generated/graphql";
 import { useState } from "react";
 import { Person } from "../../src/Types";
 
@@ -19,18 +19,16 @@ const StarWarsIcon = () => (
 );
 
 export default function Home() {
-  const [characterId, setCharacterId] = useState("");
+  const [selectedPerson, setSelectedPerson] = useState<string>("");
 
-  const { data, isLoading } = useQuery<{ person: Person }>({
-    queryKey: ["person"],
+  const { data, isLoading } = useQuery<{ getAllPersons: Person[] }>({
+    queryKey: ["allPersons"],
     queryFn: async () =>
-      request(`${process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT}/api/graphql`, GetPersonDocument, {
-        personId: 4,
-      }),
+      request(`${process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT}/api/graphql`, GetAllPersonsDocument),
   });
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setCharacterId(event.target.value);
+  const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedPerson(event.target.value);
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -39,32 +37,34 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
       <StarWarsIcon />
       <form onSubmit={handleSubmit} className="mt-8">
-        <input
-          type="text"
-          value={characterId}
-          onChange={handleInputChange}
-          placeholder="Select Star Wars character"
-          className="px-4 py-2 rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
-        />
-        <button
-          type="submit"
-          className="mt-2 px-4 py-2 bg-yellow-500 text-white rounded-md shadow-md hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-500"
-        >
-          Search
-        </button>
-      </form>
-      {isLoading && <p>Loading...</p>}
-      {!isLoading && (
-        <div>
-          <p>Data rendering is complete</p>
-          <div>
-            <p>{data?.person?.name}</p>
+        {isLoading ? (
+          <p>Loading...</p>
+        ) : (
+          <div className="relative inline-block">
+            <select
+              value={selectedPerson}
+              onChange={handleSelectChange}
+              className="px-4 py-2 rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
+            >
+              <option value="">Select Star Wars character</option>
+              {data?.getAllPersons.map((person) => (
+                <option key={person.url} value={person.url}>
+                  {person.name}
+                </option>
+              ))}
+            </select>
+            {selectedPerson && (
+              <p className="absolute top-full mt-1 text-sm text-gray-600">
+                Selected:{" "}
+                {data?.getAllPersons.find((person) => person.url === selectedPerson)?.name}
+              </p>
+            )}
           </div>
-        </div>
-      )}
+        )}
+      </form>
     </div>
   );
 }

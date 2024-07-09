@@ -45,6 +45,7 @@ export class PersonResolver {
     
             return {
               name: result.name,
+              url: result.url,
               birthYear: result.birth_year,
               homeworld: {
                 name: homeworld.name,

@@ -1,0 +1,7 @@
+query getAllPersons {
+    getAllPersons {
+        name
+        url
+        birthYear
+    }
+}

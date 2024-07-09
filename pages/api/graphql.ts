@@ -2,9 +2,10 @@ import "reflect-metadata";
 import { ApolloServer } from "apollo-server-micro";
 import {buildSchema, Resolver, Query, Arg, ObjectType, Field} from "type-graphql"
 import { PersonResolver } from "@/src/graphql/schema/person.resolver";
+import { AllPersonResolver } from "@/src/graphql/schema/getAllPersons.resolver";
 
 const schema = await buildSchema({
-    resolvers: [PersonResolver]
+    resolvers: [PersonResolver, AllPersonResolver]
 });
 
 const server = new ApolloServer({

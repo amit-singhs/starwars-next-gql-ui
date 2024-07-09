@@ -2,6 +2,7 @@
 query getPerson($personId: Float!){
     person(id: $personId) {
         name       
+        url
         birthYear
         homeworld {
             name
