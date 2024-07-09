@@ -1,6 +1,15 @@
 import Image from "next/image";
+/* import { dehydrate, useQuery } from "react-query";
+import {queryClient, getPerson} from "../src/api";
+
+export async function getServerSideProps() {
+  await queryClient.prefetchQuery(["person"],() => getPerson());
+  return { props: { dehydratedState: dehydrate(queryClient) } };
+} */
 
 export default function Home() {
+/*   const {data} = useQuery(["person"],() => getPerson());
+  console.log("From inside the Home component data is : -----------> ", data) */
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">

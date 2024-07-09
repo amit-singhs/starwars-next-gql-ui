@@ -1,0 +1,27 @@
+query getPerson($personId: Int!){
+    person(id: $personId) {
+        name       
+        birthYear
+        homeworld {
+            name
+            climate
+            terrain
+        }
+        films {
+            title
+            episode
+        }
+        vehicles {
+            name
+            model
+            class
+            cost
+        }
+        starships {
+            name
+            model
+            class
+            cost
+        }
+    }
+}
