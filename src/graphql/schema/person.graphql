@@ -1,4 +1,5 @@
-query getPerson($personId: Int!){
+
+query getPerson($personId: Float!){
     person(id: $personId) {
         name       
         birthYear

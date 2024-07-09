@@ -18,7 +18,7 @@ export default function Home() {
   
   const {data, isLoading} = useQuery({
     queryKey: ["person"],
-    queryFn: async () => request("http://localhost:3000/api/graphql", GetPersonDocument,{personId: 3}),
+    queryFn: async () => request("http://localhost:3000/api/graphql", GetPersonDocument,{personId: 4}),
   })
   
   console.log("data", data);
