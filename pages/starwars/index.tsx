@@ -19,7 +19,7 @@ const StarWarsIcon = () => (
 );
 
 export default function Home() {
-  const [selectedPerson, setSelectedPerson] = useState<string>("");
+  const [selectedPerson, setSelectedPerson] = useState<Person | null>(null);
 
   const { data: allPersonsData, isLoading: allPersonsLoading } = useQuery<{ getAllPersons: Person[] }>({
     queryKey: ["allPersons"],
@@ -27,37 +27,35 @@ export default function Home() {
       request(`${process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT}/api/graphql`, GetAllPersonsDocument),
   });
 
-  const { data: personData, isLoading: personLoading } = useQuery<{person:Person}>({
-    queryKey: ["Person"],
+  const { data: personData, isLoading: personLoading, refetch: refetchPerson } = useQuery<{person: Person}>({
+    queryKey: ["Person", selectedPerson?.url], // Include selectedPerson?.url in queryKey
     queryFn: async () =>
       request(
         `${process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT}/api/graphql`, 
         GetPersonDocument,
-        {url:'https://swapi.info/api/people/5'}
+        { url: selectedPerson?.url }
       ),
+    enabled: !!selectedPerson, // Enable query only if selectedPerson is not undefined
   });
 
-  const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedPerson(event.target.value);
-  };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    // Handle form submission or query trigger here
-  };
+  const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+     const selectedPersonObject = allPersonsData?.getAllPersons.find(person => person.url === event.target.value);
   
-  console.log("From line 49 ********* personData is ********** : ",personData);
+     // Set the selected person into selectedPerson state
+     setSelectedPerson(selectedPersonObject || null); // set null if no person found
+  };
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
       <StarWarsIcon />
-      <form onSubmit={handleSubmit} className="mt-8">
+      <div className="mt-8">
         {allPersonsLoading ? (
           <p>Loading...</p>
         ) : (
           <div className="relative inline-block">
             <select
-              value={selectedPerson}
+              value={selectedPerson?.url || ""}
               onChange={handleSelectChange}
               className="px-4 py-2 rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
             >
@@ -68,15 +66,9 @@ export default function Home() {
                 </option>
               ))}
             </select>
-            {selectedPerson && (
-              <p className="absolute top-full mt-1 text-sm text-gray-600">
-                Selected:{" "}
-                {allPersonsData?.getAllPersons.find((person) => person.url === selectedPerson)?.name}
-              </p>
-            )}
           </div>
         )}
-      </form>
+      </div>
     </div>
   );
 }
