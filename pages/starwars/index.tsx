@@ -67,7 +67,7 @@ export default function Home() {
       </div>
       <div className="mt-4">
         {allPersonsLoading ? (
-          <p>Loading...</p>
+            <span className="loading loading-ring h-12 w-12 bg-gray-600"></span>
         ) : (
           <div className="relative inline-block">
             <select
@@ -86,7 +86,8 @@ export default function Home() {
         )}
       </div>
       {personLoading ? (
-        <div className="mt-4 text-2xl font-bold">Fetching the selected character details....</div>
+        //<div className="mt-4 text-2xl font-bold">Fetching the selected character details....</div>
+        <span className="loading loading-dots h-20 w-20 bg-gray-600"></span>
       ) : (
         personData && (
           <div className="mt-4">
