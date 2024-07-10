@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import request from "graphql-request";
-import { GetAllPersonsDocument } from "@/src/generated/graphql";
+import { GetAllPersonsDocument , GetPersonDocument} from "@/src/generated/graphql";
 import { Person } from "../../src/Types";
 
 const StarWarsIcon = () => (
@@ -21,10 +21,20 @@ const StarWarsIcon = () => (
 export default function Home() {
   const [selectedPerson, setSelectedPerson] = useState<string>("");
 
-  const { data, isLoading } = useQuery<{ getAllPersons: Person[] }>({
+  const { data: allPersonsData, isLoading: allPersonsLoading } = useQuery<{ getAllPersons: Person[] }>({
     queryKey: ["allPersons"],
     queryFn: async () =>
       request(`${process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT}/api/graphql`, GetAllPersonsDocument),
+  });
+
+  const { data: personData, isLoading: personLoading } = useQuery<{person:Person}>({
+    queryKey: ["Person"],
+    queryFn: async () =>
+      request(
+        `${process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT}/api/graphql`, 
+        GetPersonDocument,
+        {url:'https://swapi.info/api/people/5'}
+      ),
   });
 
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -35,12 +45,14 @@ export default function Home() {
     event.preventDefault();
     // Handle form submission or query trigger here
   };
+  
+  console.log("From line 49 ********* personData is ********** : ",personData);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
       <StarWarsIcon />
       <form onSubmit={handleSubmit} className="mt-8">
-        {isLoading ? (
+        {allPersonsLoading ? (
           <p>Loading...</p>
         ) : (
           <div className="relative inline-block">
@@ -50,7 +62,7 @@ export default function Home() {
               className="px-4 py-2 rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
             >
               <option value="">Select Star Wars character</option>
-              {data?.getAllPersons.map((person) => (
+              {allPersonsData?.getAllPersons.map((person) => (
                 <option key={person.url} value={person.url}>
                   {person.name}
                 </option>
@@ -59,7 +71,7 @@ export default function Home() {
             {selectedPerson && (
               <p className="absolute top-full mt-1 text-sm text-gray-600">
                 Selected:{" "}
-                {data?.getAllPersons.find((person) => person.url === selectedPerson)?.name}
+                {allPersonsData?.getAllPersons.find((person) => person.url === selectedPerson)?.name}
               </p>
             )}
           </div>

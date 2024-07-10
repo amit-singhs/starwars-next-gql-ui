@@ -1,6 +1,6 @@
 
-query getPerson($personId: Float!){
-    person(id: $personId) {
+query getPerson($url: String!){
+    person(url: $url) {
         name       
         url
         birthYear

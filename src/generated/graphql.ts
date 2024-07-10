@@ -49,7 +49,7 @@ export type Query = {
 
 
 export type QueryPersonArgs = {
-  id: Scalars['Float']['input'];
+  url: Scalars['String']['input'];
 };
 
 export type Starship = {
@@ -74,7 +74,7 @@ export type GetAllPersonsQueryVariables = Exact<{ [key: string]: never; }>;
 export type GetAllPersonsQuery = { __typename?: 'Query', getAllPersons: Array<{ __typename?: 'Person', name: string, url: string, birthYear: string }> };
 
 export type GetPersonQueryVariables = Exact<{
-  personId: Scalars['Float']['input'];
+  url: Scalars['String']['input'];
 }>;
 
 
@@ -91,8 +91,8 @@ export const GetAllPersonsDocument = gql`
 }
     `;
 export const GetPersonDocument = gql`
-    query getPerson($personId: Float!) {
-  person(id: $personId) {
+    query getPerson($url: String!) {
+  person(url: $url) {
     name
     url
     birthYear

@@ -4,10 +4,10 @@ import { Person } from "./person";
 @Resolver()
 export class PersonResolver {
     @Query(() => Person)
-    async person(@Arg("id") id: number): Promise<Person | null> {
+    async person(@Arg("url") url: string): Promise<Person | null> {
         // Example: Fetch person data from a database or external API
         try {
-            const response = await fetch(`https://swapi.info/api/people/${id}/`);
+            const response = await fetch(`${url}`);
             if (!response.ok) {
               throw new Error(`HTTP error! Status: ${response.status}`);
             }
@@ -70,7 +70,7 @@ export class PersonResolver {
               })),
             };
         } catch (error) {
-            console.error(`Error fetching person with ID ${id}:`, error);
+            console.error(`Error fetching person with ID ${url}:`, error);
             return null;
         }
     }
