@@ -22,7 +22,7 @@ const Character: React.FC<CharacterProps> = ({ person }) => {
   };
 
   return (
-    <div className="bg-gradient-to-br from-blue-200 to-purple-200 p-6 rounded-lg shadow-lg">
+    <div className="bg-gradient-to-br from-blue-200 to-purple-200 p-6 rounded-lg shadow-xl">
       <h2 className="text-2xl font-semibold text-gray-800">{person?.name}</h2>
       <div className="mt-4">
         <p className="text-gray-600">

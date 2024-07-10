@@ -69,11 +69,11 @@ export default function Home() {
         {allPersonsLoading ? (
             <span className="loading loading-ring h-12 w-12 bg-gray-600"></span>
         ) : (
-          <div className="relative inline-block">
+          <div className="relative inline-block shadow-md bg-gray-100 hover:bg-gray-200 rounded-lg">
             <select
               value={selectedPerson?.url || ""}
               onChange={handleSelectChange}
-              className="px-4 py-2 rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
+              className="bg-gray-100 hover:bg-gray-200 px-4 py-2 rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-blue-300"
             >
               <option value="">Select Star Wars character</option>
               {allPersonsData?.getAllPersons.map((person) => (
