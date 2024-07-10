@@ -10,6 +10,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.50.1",
     "apollo-server-micro": "^3.13.0",
     "class-validator": "^0.14.1",
     "graphql": "^16.9.0",

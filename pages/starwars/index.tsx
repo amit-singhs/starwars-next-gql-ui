@@ -1,7 +1,7 @@
-import { useQuery } from "react-query";
+import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import request from "graphql-request";
 import { GetAllPersonsDocument } from "@/src/generated/graphql";
-import { useState } from "react";
 import { Person } from "../../src/Types";
 
 const StarWarsIcon = () => (
