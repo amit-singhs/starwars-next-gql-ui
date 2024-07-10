@@ -11,9 +11,7 @@ export class PersonResolver {
             if (!response.ok) {
               throw new Error(`HTTP error! Status: ${response.status}`);
             }
-            console.log("From the resolver *********************** response is ---->", response)
             const result = await response.json();
-            console.log(" From the line 42 result is ---->", result)
     
             // Fetch homeworld details separately
             const homeworldResponse = await fetch(result.homeworld);

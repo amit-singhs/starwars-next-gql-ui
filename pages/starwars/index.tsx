@@ -1,8 +1,12 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import request from "graphql-request";
-import { GetAllPersonsDocument , GetPersonDocument} from "@/src/generated/graphql";
+import {
+  GetAllPersonsDocument,
+  GetPersonDocument,
+} from "@/src/generated/graphql";
 import { Person } from "../../src/Types";
+import Character from "../components/Character";
 
 const StarWarsIcon = () => (
   <svg
@@ -21,35 +25,47 @@ const StarWarsIcon = () => (
 export default function Home() {
   const [selectedPerson, setSelectedPerson] = useState<Person | null>(null);
 
-  const { data: allPersonsData, isLoading: allPersonsLoading } = useQuery<{ getAllPersons: Person[] }>({
+  const { data: allPersonsData, isLoading: allPersonsLoading } = useQuery<{
+    getAllPersons: Person[];
+  }>({
     queryKey: ["allPersons"],
     queryFn: async () =>
-      request(`${process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT}/api/graphql`, GetAllPersonsDocument),
+      request(
+        `${process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT}/api/graphql`,
+        GetAllPersonsDocument
+      ),
   });
 
-  const { data: personData, isLoading: personLoading, refetch: refetchPerson } = useQuery<{person: Person}>({
+  const {
+    data: personData,
+    isLoading: personLoading,
+    refetch: refetchPerson,
+  } = useQuery<{ person: Person }>({
     queryKey: ["Person", selectedPerson?.url], // Include selectedPerson?.url in queryKey
     queryFn: async () =>
       request(
-        `${process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT}/api/graphql`, 
+        `${process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT}/api/graphql`,
         GetPersonDocument,
         { url: selectedPerson?.url }
       ),
     enabled: !!selectedPerson, // Enable query only if selectedPerson is not undefined
   });
 
-
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-     const selectedPersonObject = allPersonsData?.getAllPersons.find(person => person.url === event.target.value);
-  
-     // Set the selected person into selectedPerson state
-     setSelectedPerson(selectedPersonObject || null); // set null if no person found
+    const selectedPersonObject = allPersonsData?.getAllPersons.find(
+      (person) => person.url === event.target.value
+    );
+
+    // Set the selected person into selectedPerson state
+    setSelectedPerson(selectedPersonObject || null); // set null if no person found
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <StarWarsIcon />
-      <div className="mt-8">
+    <div className="flex flex-col items-center justify-start min-h-screen bg-gray-100">
+      <div className="mt-8 flex items-center justify-center w-full">
+        <StarWarsIcon />
+      </div>
+      <div className="mt-4">
         {allPersonsLoading ? (
           <p>Loading...</p>
         ) : (
@@ -69,6 +85,16 @@ export default function Home() {
           </div>
         )}
       </div>
+      {personLoading ? (
+        <div className="mt-4 text-2xl font-bold">Fetching the selected character details....</div>
+      ) : (
+        personData && (
+          <div className="mt-4">
+            <Character person={personData?.person} />
+          </div>
+        )
+      )}
+      <div className="mt-4 text-sm text-gray-600">Made by Amit Singh Sisodia</div>
     </div>
   );
 }

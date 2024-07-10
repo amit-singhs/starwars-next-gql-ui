@@ -20,6 +20,24 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
+Environment Configuration
+To configure the GraphQL endpoint URL, follow these steps:
+
+Create a `.env.local` file in the root folder of your project.
+
+Add the following key-value pair to .env.local:
+
+NEXT_PUBLIC_GRAPHQL_ENDPOINT=http://localhost:3000
+
+Replace `http://localhost:3000` with the actual URL of your GraphQL endpoint during local development.
+
+For deployment on Vercel or other platforms:
+
+In the remote deployment environment, update the `NEXT_PUBLIC_GRAPHQL_ENDPOINT` to point to your deployed GraphQL server, for example:
+
+NEXT_PUBLIC_GRAPHQL_ENDPOINT=https://starwars-next-gql-ui.vercel.app/
+
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
