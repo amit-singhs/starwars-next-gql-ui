@@ -9,6 +9,7 @@ import { Person } from "../../src/Types";
 import Character from "../components/Character";
 import StarWarsIcon from "../assets/images/starwars-icon.svg";
 import CharacterCard from "../components/CharacterCard";
+import Image from "next/image";
 
 
 
@@ -53,7 +54,10 @@ export default function Home() {
   return (
     <div className="flex flex-col items-center justify-start min-h-screen bg-gray-200">
       <div className="mt-8 flex items-center justify-center w-full">
-      <img src={StarWarsIcon.src} alt="Star Wars Icon" />
+      <Image
+      src={StarWarsIcon}
+      alt={"Starwars Icon"}
+      />
       </div>
       <div className="mt-4">
         {allPersonsLoading ? (

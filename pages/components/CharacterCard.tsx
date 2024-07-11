@@ -5,22 +5,22 @@ import { CharacterProps } from "../../src/Types";
 
 const CharacterCard: React.FC<CharacterProps> = ({ person }) => {
   return (
-    <div className="w-full max-w-4xl rounded-xl overflow-hidden bg-gradient-to-br from-[#0F2027] to-[#203A43] text-white">
-      <div className="relative h-64 sm:h-80">
+    <div className="w-full max-w-4xl rounded-xl overflow-hidden bg-gradient-to-br from-[#1a2a6c] to-[#b21f1f] text-white">
+      <div className="relative h-64 sm:h-80 inset-0 bg-gradient-to-tfrom-[#1a2a6c]/80 to-transparent">
         <Image
-          src={PlaceholderSvg} // Update with the correct path to your SVG
+          src={PlaceholderSvg} 
           alt={person?.name}
           layout="fill"
           objectFit="cover"
           className="object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0F2027]/80 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#1a2a6c]/80 to-transparent" />
       </div>
       <div className="p-6 sm:p-8 grid gap-6">
         <div className="flex items-center gap-4">
           <div className="flex items-center justify-center w-12 h-12 bg-[#203A43] border-2 border-[#34e89e] rounded-full">
             <Image
-              src={PlaceholderSvg} // Update with the correct path to your SVG
+              src={PlaceholderSvg} 
               alt={""}
               width={40}
               height={40}
@@ -29,7 +29,7 @@ const CharacterCard: React.FC<CharacterProps> = ({ person }) => {
           </div>
           <div>
             <h2 className="text-2xl font-bold">{person?.name}</h2>
-            <p className="text-sm text-[#34e89e]">{person?.homeworld.name}</p>
+            <p className="text-sm text-[#34e89e]">{person?.homeworld?.name}</p>
           </div>
         </div>
         <div className="grid grid-cols-2 gap-4">
