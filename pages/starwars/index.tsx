@@ -11,8 +11,8 @@ import Character from "../components/Character";
 const StarWarsIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width="300px"
-    height="300px"
+    width="500px"
+    height="500px"
     viewBox="0 0 192.756 192.756"
   >
     <g fillRule="evenodd" clipRule="evenodd">
@@ -61,7 +61,7 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-start min-h-screen bg-gray-100">
+    <div className="flex flex-col items-center justify-start min-h-screen bg-gray-200">
       <div className="mt-8 flex items-center justify-center w-full">
         <StarWarsIcon />
       </div>
@@ -69,6 +69,8 @@ export default function Home() {
         {allPersonsLoading ? (
             <span className="loading loading-ring h-12 w-12 bg-gray-600"></span>
         ) : (
+          <div>
+          <label className="mr-3">Select Character: </label>
           <div className="relative inline-block shadow-md bg-gray-100 hover:bg-gray-200 rounded-lg">
             <select
               value={selectedPerson?.url || ""}
@@ -82,6 +84,7 @@ export default function Home() {
                 </option>
               ))}
             </select>
+          </div>
           </div>
         )}
       </div>
