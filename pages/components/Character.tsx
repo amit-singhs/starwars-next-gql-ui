@@ -3,9 +3,7 @@
 import React from "react";
 import { Person, Homeworld } from "../../src/Types";
 
-type CharacterProps = {
-  person: Person;
-};
+import { CharacterProps } from "../../src/Types";
 
 const Character: React.FC<CharacterProps> = ({ person }) => {
   const renderList = (items: string[]) => {

@@ -34,4 +34,6 @@ export type Homeworld = {
     vehicles: Vehicle[];
     starships: Starship[];
   };
-  
+  export type CharacterProps = {
+    person: Person;
+  };
