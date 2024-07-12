@@ -65,7 +65,7 @@ export default function Home() {
         ) : (
           <div>
           <label className="mr-3">Select Character: </label>
-          <div className="relative inline-block shadow-md bg-gray-100 hover:bg-gray-200 rounded-lg">
+          <div className="relative inline-block shadow-md bg-base-100 hover:bg-gray-200 rounded-lg">
             <select
               value={selectedPerson?.url || ""}
               onChange={handleSelectChange}

@@ -7,6 +7,10 @@ const nextConfig = {
         config.experiments.topLevelAwait = true;
         return config
     },
+    images: {
+        domains: ['images.unsplash.com'],
+      },
 };
+
 
 export default nextConfig;
